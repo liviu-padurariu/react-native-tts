@@ -130,8 +130,17 @@ RCT_EXPORT_METHOD(pause:(BOOL *)onWordBoundary resolve:(RCTPromiseResolveBlock)r
     resolve([NSNumber numberWithBool:paused]);
 }
 
-RCT_EXPORT_METHOD(resume:(RCTPromiseResolveBlock)resolve reject:(__unused RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(resume:(NSDictionary *)params resolve:(RCTPromiseResolveBlock)resolve reject:(__unused RCTPromiseRejectBlock)reject)
 {
+    NSDictionary *iosParams = [params valueForKey:@"iosParams"];
+    NSString *audioOutput = [iosParams valueForKey:@"audioOutput"];
+    if (audioOutput) {
+        if([audioOutput isEqualToString:@"speaker"]) {
+            [[AVAudioSession sharedInstance] overrideOutputAudioPort:(AVAudioSessionPortOverrideSpeaker) error:nil];
+        } else if([audioOutput isEqualToString:@"earpiece"]) {
+            [[AVAudioSession sharedInstance] overrideOutputAudioPort:(AVAudioSessionPortOverrideNone) error:nil];
+        }
+    }
     BOOL continued = [self.synthesizer continueSpeaking];
 
     resolve([NSNumber numberWithBool:continued]);
