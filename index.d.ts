@@ -110,7 +110,7 @@ export class ReactNativeTts extends RN.NativeEventEmitter {
   speak: (utterance: string, options?: Options) => string | number;
   stop: (onWordBoundary?: boolean) => Promise<boolean>;
   pause: (onWordBoundary?: boolean) => Promise<boolean>;
-  resume: () => Promise<boolean>;
+  resume: (options?: Options) => Promise<boolean>;
   addEventListener: <T extends TtsEvents>(
     type: T,
     handler: TtsEventHandler<T>

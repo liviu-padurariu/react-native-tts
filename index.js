@@ -108,9 +108,9 @@ class Tts extends NativeEventEmitter {
     return Promise.resolve(false);
   }
 
-  resume() {
+  resume(options = {}) {
     if (Platform.OS === 'ios') {
-      return TextToSpeech.resume();
+      return TextToSpeech.resume(options);
     }
     return Promise.resolve(false);
   }
